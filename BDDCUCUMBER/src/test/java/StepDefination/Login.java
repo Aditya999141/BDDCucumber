@@ -3,42 +3,53 @@ package StepDefination;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+
+
 public class Login
-{
+{	
+	
 	WebDriver driver = new ChromeDriver();
-	@When("User provide facebook URL, user id and password")
-	public void user_provide_facebook_url_user_id_and_password() 
+	
+	@Given("User will on login page")
+	public void user_will_on_login_page() 
 	{
-		driver.manage().window().maximize();
-		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-		//driver.get("https://www.facebook.com/login/");
-		driver.navigate().to("https://www.facebook.com/login/");
-		driver.findElement(By.xpath("//input[@placeholder='Email address or phone number']")).sendKeys("aditya.bandgar45@gmail.com");
-		driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Whirpol@1860310");
+		driver.get("https://practicetestautomation.com/practice-test-login/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+	
+		
 		
 	}
 
-	@When("Hits enter")
-	public void hits_enter() 
+	@When("^User enters (.*) & (.*)$")// "^user enters(.*) and(.*)$"
+	public void user_enters( String UserName, String Password ) 
 	{
-	    driver.findElement(By.xpath("//button[@id='loginbutton']")).sendKeys(Keys.ENTER);
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(UserName);
+		driver.findElement(By.xpath("//input[@type='password']")).sendKeys(Password);
+
+		
 	}
 
-	@Then("User navigated to result")
-	public void user_navigated_to_result() 
+	@When("Click on Login button")
+	public void click_on_login_button() 
 	{
-	   System.out.println(driver.getTitle());
-	   //driver.close();
-	   //driver.quit();
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
 	}
 
+	@Then("User redirected to Home Page")
+	public void user_redirected_to_home_page() 
+	
+	{
+		System.out.println(driver.getTitle());
+		//driver.quit();
+	}
 
+	
 	
 }
